@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -41,6 +42,16 @@ class AuthController extends Controller
         }
     }
 
+    public function getUser()
+    {
+        try {
+            $user = Auth::user();
+            return response()->json(['user' => $user], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     // Login Controller
     public function login(Request $request)
     {
@@ -63,6 +74,17 @@ class AuthController extends Controller
             } else {
                 return response()->json(['message' => 'Invalid credentials'], 401);
             }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['message' => $th->getMessage(), 500]);
+        }
+    }
+
+    public function logout()
+    {
+        try {
+            Auth::guard("web")->logout();
+            return response()->json(['message' => 'logged out successfully'], 200);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json(['message' => $th->getMessage(), 500]);
