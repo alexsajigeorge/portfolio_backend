@@ -42,10 +42,10 @@ class AuthController extends Controller
         }
     }
 
-    public function getUser()
+    public function getAuthUser()
     {
         try {
-            $user = Auth::user();
+            $user = User::where('id', auth('sanctum')->user()->id)->get();
             return response()->json(['user' => $user], 200);
         } catch (\Throwable $th) {
             //throw $th;
@@ -70,7 +70,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 $token = $user->createToken('authToken')->plainTextToken;
-                return response()->json(['user' => $user, 'auth_token' => $token], 200);
+                return response()->json(['user' => $user, 'authToken' => $token], 200);
             } else {
                 return response()->json(['message' => 'Invalid credentials'], 401);
             }

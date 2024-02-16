@@ -17,11 +17,16 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout']);
-    
+    Route::get('/getAuthUser', [App\Http\Controllers\Admin\AuthController::class, 'getAuthUser']);
 });
 
 
 /////////////////////////////// ADMIN AUTH ROUTES   ///////////////////////////////////////
+
 Route::post('/register', [App\Http\Controllers\Admin\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\Admin\AuthController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout']);
+
+
+
+/////////////////////////////// FRONTEND ROUTES   ///////////////////////////////////////

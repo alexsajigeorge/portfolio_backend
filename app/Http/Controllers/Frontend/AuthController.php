@@ -42,15 +42,7 @@ class AuthController extends Controller
         }
     }
 
-    public function getUser()
-    {
-        try {
-            $user = Auth::user();
-            return response()->json(['user' => $user], 200);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-    }
+    
 
     // Login Controller
     public function login(Request $request)
@@ -83,8 +75,10 @@ class AuthController extends Controller
     public function logout()
     {
         try {
-            Auth::guard("web")->logout();
-            return response()->json(['message' => 'logged out successfully'], 200);
+            Session::flush();
+            Auth::logout();
+
+            return Redirect('login')->response()->json(['message' => 'logged out successfully'], 200);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json(['message' => $th->getMessage(), 500]);
