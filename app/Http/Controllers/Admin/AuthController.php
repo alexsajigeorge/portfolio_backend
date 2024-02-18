@@ -84,6 +84,7 @@ class AuthController extends Controller
     {
         try {
             Auth::guard("web")->logout();
+            Session::flush();
             return response()->json(['message' => 'logged out successfully'], 200);
         } catch (\Throwable $th) {
             //throw $th;
