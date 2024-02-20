@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SkillsController extends Controller
 {
     public function getSkills()
-    { {
-            try {
-                $skills = Skill::all();
-                return response()->json(['skills' => $skills], 200);
-            } catch (\Throwable $th) {
-                //throw $th;
-                return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
-            }
+    {
+        try {
+            $skills = Skill::all();
+            return response()->json(['skills' => $skills], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
         }
     }
 
@@ -38,13 +38,14 @@ class SkillsController extends Controller
             }
 
             $iconPath = $request->file('icon')->store('icons', 'public');
+            $imageUrl = Storage::url($iconPath);
 
             $skills = Skill::create([
                 'user_id' => auth('sanctum')->user()->id,
                 'skill_name' => $request->input('skill_name'),
                 'description' => $request->input('description'),
                 'proficency_lvl' => $request->input('proficency_lvl'),
-                'icon' => $iconPath,
+                'icon' => $imageUrl,
             ]);
 
             return response()->json(['message' => 'Skill Added Successfully', 'skills' => $skills, 'status' => 200], status: 200);
@@ -112,7 +113,7 @@ class SkillsController extends Controller
             }
 
             $skills->delete();
-            
+
             return response()->json(['message' => 'Skills Deleted Successfully', 'status' => 200], status: 200);
         } catch (\Throwable $th) {
             //throw $th;
