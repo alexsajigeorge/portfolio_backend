@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Validator;
 class SkillsController extends Controller
 {
     public function getSkills()
-    { {
-            try {
-                $skills = Skill::all();
-                return response()->json(['skills' => $skills], 200);
-            } catch (\Throwable $th) {
-                //throw $th;
-                return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
-            }
+    {
+        try {
+            $skills = Skill::all();
+            return response()->json(['skills' => $skills], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
         }
     }
 
@@ -112,7 +111,7 @@ class SkillsController extends Controller
             }
 
             $skills->delete();
-            
+
             return response()->json(['message' => 'Skills Deleted Successfully', 'status' => 200], status: 200);
         } catch (\Throwable $th) {
             //throw $th;

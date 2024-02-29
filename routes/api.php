@@ -18,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getAuthUser', [App\Http\Controllers\Admin\AuthController::class, 'getAuthUser']);
+    /////////////////////////////// SKILLS ROUTES ///////////////////////////////////////
     Route::post('/addSkill', [App\Http\Controllers\Admin\SkillsController::class, 'addSkill']);
     Route::post('/updateSkill/{id}', [App\Http\Controllers\Admin\SkillsController::class, 'updateSkill']);
     Route::delete('/deleteSkill/{id}', [App\Http\Controllers\Admin\SkillsController::class, 'deleteSkill']);
+    /////////////////////////////// PROFILE ROUTES ///////////////////////////////////////
+    Route::post('/addProfile', [App\Http\Controllers\Admin\ProfileController::class, 'AddProfile']);
+    Route::post('/updateProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile']);
+    Route::post('/deleteProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'deleteProfile']);
+    /////////////////////////////// PROJECT ROUTES ///////////////////////////////////////
 });
 
 
@@ -35,3 +41,4 @@ Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logou
 /////////////////////////////// FRONTEND ROUTES ///////////////////////////////////////
 
 Route::get('/getSkills', [App\Http\Controllers\Admin\SkillsController::class, 'getSkills']);
+Route::get('/getProfile', [App\Http\Controllers\Admin\ProfileController::class, 'getProfile']);
