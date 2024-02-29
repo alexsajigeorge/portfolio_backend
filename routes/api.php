@@ -15,18 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getAuthUser', [App\Http\Controllers\Admin\AuthController::class, 'getAuthUser']);
-    /////////////////////////////// SKILLS ROUTES ///////////////////////////////////////
+    ///////////////////////////// SKILLS ROUTES ///////////////////////////////////////
     Route::post('/addSkill', [App\Http\Controllers\Admin\SkillsController::class, 'addSkill']);
     Route::post('/updateSkill/{id}', [App\Http\Controllers\Admin\SkillsController::class, 'updateSkill']);
     Route::delete('/deleteSkill/{id}', [App\Http\Controllers\Admin\SkillsController::class, 'deleteSkill']);
-    /////////////////////////////// PROFILE ROUTES ///////////////////////////////////////
-    Route::post('/addProfile', [App\Http\Controllers\Admin\ProfileController::class, 'AddProfile']);
-    Route::post('/updateProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile']);
-    Route::post('/deleteProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'deleteProfile']);
-    /////////////////////////////// PROJECT ROUTES ///////////////////////////////////////
+    /////////////////////////////// PROJECTS ROUTES ///////////////////////////////////////
+    Route::post('/addProject', [App\Http\Controllers\Admin\ProjectController::class, 'addProject']);
+    Route::post('/updateProject/{id}', [App\Http\Controllers\Admin\ProjectController::class, 'updateProject']);
+    Route::delete('/deleteProject/{id}', [App\Http\Controllers\Admin\ProjectController::class, 'deleteProject']);
 });
 
 
@@ -42,3 +40,4 @@ Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logou
 
 Route::get('/getSkills', [App\Http\Controllers\Admin\SkillsController::class, 'getSkills']);
 Route::get('/getProfile', [App\Http\Controllers\Admin\ProfileController::class, 'getProfile']);
+Route::get('/getProjects', [App\Http\Controllers\Admin\SkillsController::class, 'getProjects']);
