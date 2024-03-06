@@ -40,3 +40,4 @@ Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logou
 
 Route::get('/getSkills', [App\Http\Controllers\Admin\SkillsController::class, 'getSkills']);
 Route::get('/getProjects', [App\Http\Controllers\Admin\ProjectController::class, 'getProjects']);
+Route::get('/getProfile', [App\Http\Controllers\Admin\ProfileController::class, 'getProfile']);
