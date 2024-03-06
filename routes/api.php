@@ -39,4 +39,4 @@ Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logou
 /////////////////////////////// FRONTEND ROUTES ///////////////////////////////////////
 
 Route::get('/getSkills', [App\Http\Controllers\Admin\SkillsController::class, 'getSkills']);
-Route::get('/getProjects', [App\Http\Controllers\Admin\SkillsController::class, 'getProjects']);
+Route::get('/getProjects', [App\Http\Controllers\Admin\ProjectController::class, 'getProjects']);
