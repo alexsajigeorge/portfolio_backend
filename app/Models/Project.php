@@ -10,6 +10,11 @@ class Project extends Model
 {
     use HasApiTokens, HasFactory;
 
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'project_skill');
+    }
+
     protected $fillable = [
         'user_id',
         'title',

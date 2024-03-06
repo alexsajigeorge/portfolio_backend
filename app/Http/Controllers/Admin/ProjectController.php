@@ -45,6 +45,10 @@ class ProjectController extends Controller
                 'tech_stack' => $request->input('tech_stack'),
                 'img_url' => $imageUrl,
             ]);
+            // Attach skills to the project
+            $skills = $request->input('tech_stack');
+            $projects->skills()->attach($skills);
+
             return response()->json(['message' => 'Project Added Successfully', 'projects' => $projects, 'status' => 200], status: 200);
         } catch (\Throwable $th) {
             //throw $th;
@@ -79,6 +83,10 @@ class ProjectController extends Controller
                 'github_url' => $request->input('github_url'),
                 'tech_stack' => $request->input('tech_stack'),
             ]);
+
+            // Update skills associated with the project
+            $skills = $request->input('tech_stack');
+            $projects->skills()->sync($skills);
 
             if ($request->hasFile('img_url')) {
                 $projectImage = $request->file('img_url')->store('projects', 'public');
