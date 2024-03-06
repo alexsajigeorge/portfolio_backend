@@ -109,14 +109,14 @@ class SkillsController extends Controller
             }
 
             if ($skills->user_id !== auth('sanctum')->user()->id) {
-                return response()->json(['message' => 'Unauthorized', 'status' => 401], status: 401);
+                return response()->json(['message' => 'Unauthorized', 'status' => 401], 401);
             }
 
             $skills->delete();
 
-            return response()->json(['message' => 'Skills Deleted Successfully', 'status' => 200], status: 200);
+            return response()->json(['message' => 'Skill Deleted Successfully', 'status' => 200], 200);
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json(['message' =>  $th->getMessage(), 'status' => 500], 500);
         }
     }
 }

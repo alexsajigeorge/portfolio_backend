@@ -28,6 +28,7 @@ class ProjectController extends Controller
                 'title' => 'required',
                 'description' => 'required',
                 'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'tech_stack' => 'required|array',
             ]);
             if ($validation->fails()) {
                 return response()->json(['message' => $validation->errors(), 'status' => 422], status: 422);
@@ -42,7 +43,6 @@ class ProjectController extends Controller
                 'description' => $request->input('description'),
                 'project_url' => $request->input('project_url'),
                 'github_url' => $request->input('github_url'),
-                'tech_stack' => $request->input('tech_stack'),
                 'img_url' => $imageUrl,
             ]);
             // Attach skills to the project
@@ -87,6 +87,7 @@ class ProjectController extends Controller
             // Update skills associated with the project
             $skills = $request->input('tech_stack');
             $projects->skills()->sync($skills);
+            
 
             if ($request->hasFile('img_url')) {
                 $projectImage = $request->file('img_url')->store('projects', 'public');
@@ -118,7 +119,7 @@ class ProjectController extends Controller
             return response()->json(['message' => 'Project Deleted Successfully', 'status' => 200], status: 200);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
+            return response()->json(['message' => $th->getMessage(), 'status' => 500], status: 500);
         }
     }
 }
