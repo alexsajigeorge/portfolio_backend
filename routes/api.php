@@ -25,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/addProject', [App\Http\Controllers\Admin\ProjectController::class, 'addProject']);
     Route::post('/updateProject/{id}', [App\Http\Controllers\Admin\ProjectController::class, 'updateProject']);
     Route::delete('/deleteProject/{id}', [App\Http\Controllers\Admin\ProjectController::class, 'deleteProject']);
+    /////////////////////////////// PROFILE ROUTES ///////////////////////////////////////
+    Route::post('/addProfile', [App\Http\Controllers\Admin\ProfileController::class, 'addProfile']);
+    Route::post('/updateProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile']);
+    Route::delete('/deleteProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'deleteProfile']);
 });
 
 
@@ -41,3 +45,7 @@ Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logou
 Route::get('/getSkills', [App\Http\Controllers\Admin\SkillsController::class, 'getSkills']);
 Route::get('/getProjects', [App\Http\Controllers\Admin\ProjectController::class, 'getProjects']);
 Route::get('/getProfile', [App\Http\Controllers\Admin\ProfileController::class, 'getProfile']);
+
+Route::get('/getContacts', [App\Http\Controllers\Frontend\ContactController::class, 'getContacts']);
+Route::post('/contactMe', [App\Http\Controllers\Frontend\ContactController::class, 'contactMe']);
+Route::delete('/deleteContact/{id}', [App\Http\Controllers\Frontend\ContactController::class, 'deleteContact']);

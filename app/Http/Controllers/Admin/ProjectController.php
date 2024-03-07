@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -13,8 +14,8 @@ class ProjectController extends Controller
     public function getProjects()
     {
         try {
-            $projects = Project::all();
-            return response()->json(['projects' => $projects, 'status' => 200], 200);
+            $projects = Project::with('skills')->get();
+            return response()->json(['projects' => $projects,  'status' => 200], 200);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
@@ -28,7 +29,7 @@ class ProjectController extends Controller
                 'title' => 'required',
                 'description' => 'required',
                 'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'tech_stack' => 'required',
+                'skills' => 'required', // Assuming the skills come in an array from the dropdown
             ]);
             if ($validation->fails()) {
                 return response()->json(['message' => $validation->errors(), 'status' => 422], status: 422);
@@ -43,12 +44,15 @@ class ProjectController extends Controller
                 'description' => $request->input('description'),
                 'project_url' => $request->input('project_url'),
                 'github_url' => $request->input('github_url'),
-                'tech_stack' => $request->input('tech_stack'),
                 'img_url' => $imageUrl,
             ]);
-            // Attach skills to the project
-            $skills = $request->input('tech_stack');
-            $projects->skills()->attach($skills);
+
+            // Retrieve the Skill Instances based on the selected skill IDs
+            $selectedSkills = Skill::find($request->input('skills'));
+
+            // Attach Skills to the Project
+            $projects->skills()->attach($selectedSkills);
+
 
             return response()->json(['message' => 'Project Added Successfully', 'projects' => $projects, 'status' => 200], status: 200);
         } catch (\Throwable $th) {
@@ -60,15 +64,6 @@ class ProjectController extends Controller
     public function updateProject(Request $request, $id)
     {
         try {
-            // $validation = Validator::make($request->all(), [
-            //     'title' => 'required',
-            //     'description' => 'required',
-            //     'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // ]);
-            // if ($validation->fails()) {
-            //     return response()->json(['message' => $validation->errors(), 'status' => 422], status: 422);
-            // }
-
             $projects = Project::find($id);
             if (!$projects) {
                 return response()->json(['message' => 'Project not fund', 'status' => 404], 404);
@@ -82,13 +77,7 @@ class ProjectController extends Controller
                 'description' => $request->input('description'),
                 'project_url' => $request->input('project_url'),
                 'github_url' => $request->input('github_url'),
-                'tech_stack' => $request->input('tech_stack'),
             ]);
-
-            // Update skills associated with the project
-            $skills = $request->input('tech_stack');
-            $projects->skills()->sync($skills);
-            
 
             if ($request->hasFile('img_url')) {
                 $projectImage = $request->file('img_url')->store('projects', 'public');

@@ -35,7 +35,7 @@ class AuthController extends Controller
 
             $token = $user->createToken('authToken')->plainTextToken;
 
-            return response()->json(['user' => $user, 'auth_token' => $token], 200);
+            return response()->json(['user' => $user, 'authToken' => $token], 200);
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json(['message' => $th->getMessage(), 500]);
@@ -62,7 +62,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 $token = $user->createToken('authToken')->plainTextToken;
-                return response()->json(['user' => $user, 'auth_token' => $token], 200);
+                return response()->json(['user' => $user, 'authToken' => $token], 200);
             } else {
                 return response()->json(['message' => 'Invalid credentials'], 401);
             }

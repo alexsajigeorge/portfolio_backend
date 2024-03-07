@@ -12,7 +12,7 @@ class Project extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class, 'project_skill_mapings', 'project_id', 'skill_id');
+        return $this->belongsToMany(Skill::class, 'project_skill_mapings');
     }
 
     protected $fillable = [
@@ -22,6 +22,6 @@ class Project extends Model
         'img_url',
         'project_url',
         'github_url',
-        'tech_stack',
+        // 'tech_stack',
     ];
 }

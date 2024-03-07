@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('img_url');
             $table->string('project_url')->nullable();
             $table->string('github_url')->nullable();
-            $table->unsignedBigInteger('tech_stack');
-            $table->foreign('tech_stack')->references('id')->on('skills')->onDelete('cascade');
+            // $table->unsignedBigInteger('tech_stack');
+            // $table->foreign('tech_stack')->references('id')->on('skills')->onDelete('cascade');
             $table->timestamps();
         });
 
