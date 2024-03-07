@@ -59,6 +59,15 @@ class ProfileController extends Controller
     {
 
         try {
+
+            $validation = Validator::make($request->all(), [
+
+                'email' => 'required | email',
+            ]);
+            if ($validation->fails()) {
+                return response()->json(['message' => $validation->errors(), 'status' => 422], status: 422);
+            }
+
             $profile = Profile::find($id);
             if (!$profile) {
                 return response()->json(['message' => 'Profile not found', 'status' => 404], 404);

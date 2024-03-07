@@ -29,6 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/addProfile', [App\Http\Controllers\Admin\ProfileController::class, 'addProfile']);
     Route::post('/updateProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile']);
     Route::delete('/deleteProfile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'deleteProfile']);
+    /////////////////////////////// SOCIAL ROUTES ///////////////////////////////////////
+    Route::post('/addSocialLink', [App\Http\Controllers\Admin\SocialLinkController::class, 'addSocialLink']);
+    Route::post('/updateSocialLink/{id}', [App\Http\Controllers\Admin\SocialLinkController::class, 'updateSocialLink']);
+    Route::delete('/deleteSocialLink/{id}', [App\Http\Controllers\Admin\SocialLinkController::class, 'deleteSocialLink']);
 });
 
 
@@ -49,3 +53,5 @@ Route::get('/getProfile', [App\Http\Controllers\Admin\ProfileController::class, 
 Route::get('/getContacts', [App\Http\Controllers\Frontend\ContactController::class, 'getContacts']);
 Route::post('/contactMe', [App\Http\Controllers\Frontend\ContactController::class, 'contactMe']);
 Route::delete('/deleteContact/{id}', [App\Http\Controllers\Frontend\ContactController::class, 'deleteContact']);
+
+Route::get('/getSocialLinks', [App\Http\Controllers\Admin\SocialLinkController::class, 'getSocialLinks']);
