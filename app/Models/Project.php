@@ -12,7 +12,7 @@ class Project extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class, 'project_skill_mapings');
+        return $this->belongsToMany(Skill::class, 'project_skill_mapings', 'project_id', 'skill_id');
     }
 
     protected $fillable = [

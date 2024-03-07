@@ -28,7 +28,7 @@ class ProjectController extends Controller
                 'title' => 'required',
                 'description' => 'required',
                 'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'tech_stack' => 'required|array',
+                'tech_stack' => 'required',
             ]);
             if ($validation->fails()) {
                 return response()->json(['message' => $validation->errors(), 'status' => 422], status: 422);
@@ -43,6 +43,7 @@ class ProjectController extends Controller
                 'description' => $request->input('description'),
                 'project_url' => $request->input('project_url'),
                 'github_url' => $request->input('github_url'),
+                'tech_stack' => $request->input('tech_stack'),
                 'img_url' => $imageUrl,
             ]);
             // Attach skills to the project

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->foreign('tech_stack')->references('id')->on('skills')->onDelete('cascade');
             $table->timestamps();
         });
+
+        
     }
 
     /**

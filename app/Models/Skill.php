@@ -12,7 +12,7 @@ class Skill extends Model
     use HasApiTokens, HasFactory;
 
     public function projects(){
-        return $this->belongsToMany(Project::class, 'project_skill_mapings');
+        return $this->belongsToMany(Project::class, 'project_skill_mapings', 'skill_id', 'project_id');
     }
 
     protected $fillable = [
