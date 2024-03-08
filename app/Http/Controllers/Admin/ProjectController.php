@@ -24,6 +24,7 @@ class ProjectController extends Controller
 
     public function addProject(Request $request)
     {
+        // dd($request);
         try {
             $validation = Validator::make($request->all(), [
                 'title' => 'required',
@@ -38,6 +39,9 @@ class ProjectController extends Controller
             $projectImage = $request->file('img_url')->store('projects', 'public');
             $imageUrl = Storage::url($projectImage);
 
+
+            $selectedSkillIds = $request->input('skills');
+
             $projects = Project::create([
                 'user_id' => auth('sanctum')->user()->id,
                 'title' => $request->input('title'),
@@ -47,12 +51,11 @@ class ProjectController extends Controller
                 'img_url' => $imageUrl,
             ]);
 
-            // Retrieve the Skill Instances based on the selected skill IDs
-            $selectedSkills = Skill::find($request->input('skills'));
-
-            // Attach Skills to the Project
-            $projects->skills()->attach($selectedSkills);
-
+            if ($projects->id && !empty($selectedSkillIds)) {
+                foreach ($selectedSkillIds as $skillId) {
+                    $projects->skills()->attach($skillId);
+                }
+            }
 
             return response()->json(['message' => 'Project Added Successfully', 'projects' => $projects, 'status' => 200], status: 200);
         } catch (\Throwable $th) {
@@ -86,6 +89,13 @@ class ProjectController extends Controller
                     'img_url' => $imageUrl,
                 ]);
             }
+
+            // Retrieve the Skill Instances based on the selected skill IDs
+            $selectedSkills = Skill::find($request->input('skills'));
+
+            // Attach Skills to the Project
+            $projects->skills()->sync($selectedSkills);
+
 
             return response()->json(['message' => 'Project Updated Successfully', 'projects' => $projects, 'status' => 200], status: 200);
         } catch (\Throwable $th) {
