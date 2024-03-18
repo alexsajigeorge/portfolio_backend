@@ -17,7 +17,7 @@ class SkillsController extends Controller
             return response()->json(['skills' => $skills], 200);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json(['message' => 'Something went wrong', 'status' => 500], status: 500);
+            return response()->json(['message' =>  $th->getMessage(), 'status' => 500], status: 500);
         }
     }
 
