@@ -27,3 +27,5 @@ Route::post('/contactMe', [App\Http\Controllers\Frontend\ContactController::clas
 Route::delete('/deleteContact/{id}', [App\Http\Controllers\Frontend\ContactController::class, 'deleteContact']);
 
 Route::get('/getSocialLinks', [App\Http\Controllers\Admin\SocialLinkController::class, 'getSocialLinks']);
+
+Route::get('/hello', [App\Http\Controllers\Controller::class, 'hello']);
